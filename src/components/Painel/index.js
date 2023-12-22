@@ -2,26 +2,36 @@ import React from "react";
 import styled from "styled-components";
 import Cards from "../Cards";
 import img from '../../assets/Background-Pokemon.webp'
+import { useState } from "react";
+
 
 const Painel = () => {
 
+    const [newPokemon, setNewPokemon] = useState([0]);
+    console.log(newPokemon);
+    function numero (){
+        let numeroAleatorio = Math.floor(Math.random() * 1017);
+        return numeroAleatorio; 
+    }
+    const generatePokemon = () =>{
+        console.log('cliquei')
+        const newPokemonGenerate = Array.from ({lenght: 9})
+        setNewPokemon([...newPokemon, ...newPokemonGenerate])
+    }
+   
+
     return (
+
+        
         <>
             <Div>
                 <Section>
-                    <Cards/>
-                    <Cards/>
-                    <Cards/>
-                    <Cards/>
-                    <Cards/>
-                    <Cards/>
-                    <Cards/>
-                    <Cards/>
-                    <Cards/>
+                    {newPokemon.map((pokemon, index)=><Cards key={index} pokemonId={numero()}/>)}
+                   
                     
                 </Section>
                 <Footer>
-                    <Button>Mais Pokemons</Button>
+                    <Button onClick={generatePokemon}>Mais Pokemons</Button>
                 </Footer>
 
             </Div>

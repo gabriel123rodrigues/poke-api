@@ -2,27 +2,50 @@ import React from 'react'
 import styled from 'styled-components'
 import Img from '../../assets/fogo.jpg'
 import pokemon from '../../assets/charizard.jpg'
-import  useApi  from '../../services/useApi'
+import { useState,useEffect } from "react";
 
 
-export const Cards = () => {
+export const Cards = ({pokemonId}) => {
 
-    const {data} = useApi(`https://pokeapi.co/api/v2/pokemon/0`);
-     console.log(data);
+    const [pokemonData,setPokemonData] = useState(null);
 
-    return (
+    useEffect(()=>{
+        
+        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
+        .then((response)=>{
+            return response.json();
+        })
+        .then((data)=>{
+            
+            setPokemonData(data);
+            
+        })
+       
+       
+    },[pokemonId]);
+    
+
+
+   
+     return (
         <DivContainer>
+{pokemonData && (
             <SectionNav>
-                <ImgPokemon />
+                <ImgPokemon><img src={pokemonData.sprites.front_default} style={{width:'100%'}}/></ImgPokemon>
             </SectionNav>
-
+)
+}
+{pokemonData && (
             <DivNomePokeon>
-               
-                <h2>Charizard</h2>
+                <h2>{pokemonData.name}</h2>
             </DivNomePokeon>
+)}
+
+
         </DivContainer>
     )
 }
+
 export default Cards
 
 const DivContainer = styled.div`
@@ -54,16 +77,22 @@ const ImgPokemon = styled.div`
     height: 150px;
     width: 150px;
     border-radius: 50%;
-    background-color: black;
+    background-color: white;
     position: absolute;
     z-index: 5;
-    background-image: url(${pokemon});
+    /* background-image: url(${pokemon}); */
     background-size: cover;
     border: 1px solid red;
+    display: flex;
+    justify-content:center;
+    align-items: center;
 `
 const DivNomePokeon = styled.footer`
-    margin-top: 100px;
-    margin-left: 50px;
+   display: flex;
+   margin-top: 80px;
+   justify-content: center;
+   align-items: center;
+   
 `
 
 
