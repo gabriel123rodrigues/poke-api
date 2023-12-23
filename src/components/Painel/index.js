@@ -7,16 +7,18 @@ import { useState } from "react";
 
 const Painel = () => {
 
-    const [newPokemon, setNewPokemon] = useState([0]);
+    const [newPokemon, setNewPokemon] = useState([0,1,2]);
     console.log(newPokemon);
-    function numero (){
-        let numeroAleatorio = Math.floor(Math.random() * 1017);
-        return numeroAleatorio; 
-    }
+   
     const generatePokemon = () =>{
-        console.log('cliquei')
-        const newPokemonGenerate = Array.from ({lenght: 9})
-        setNewPokemon([...newPokemon, ...newPokemonGenerate])
+        console.log('cliquei');
+        let addPokemon = 3
+        let updatePokemon = [];
+        for(let i=0; i<3 ; i++){
+            updatePokemon.push(addPokemon);
+            addPokemon ++;
+        }
+        setNewPokemon([...newPokemon,...updatePokemon]);
     }
    
 
@@ -26,7 +28,7 @@ const Painel = () => {
         <>
             <Div>
                 <Section>
-                    {newPokemon.map((pokemon, index)=><Cards key={index} pokemonId={numero()}/>)}
+                    {newPokemon.map((pokemon, index)=><Cards key={index} />)}
                    
                     
                 </Section>

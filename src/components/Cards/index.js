@@ -1,36 +1,61 @@
 import React from 'react'
 import styled from 'styled-components'
-import Img from '../../assets/fogo.jpg'
+import fogo from '../../assets/fogo.jpg'
+import grama from '../../assets/grama.jpg'
+import eletrico from '../../assets/eletrico.jpg'
 import pokemon from '../../assets/charizard.jpg'
+import dark from '../../assets/dark.jpg'
+import fly from '../../assets/flying.jpg'
+import agua from '../../assets/agua.jpg'
+import normal from '../../assets/normal.jpg'
 import { useState,useEffect } from "react";
 
 
-export const Cards = ({pokemonId}) => {
+export const Cards = ({}) => {
 
+    const [background,setBackground] = useState ('');
     const [pokemonData,setPokemonData] = useState(null);
+    function numero (){
+        let numeroAleatorio = Math.floor(Math.random() * 1017);
+        return numeroAleatorio; 
+    }
 
     useEffect(()=>{
         
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
+        fetch(`https://pokeapi.co/api/v2/pokemon/${numero()}`)
         .then((response)=>{
             return response.json();
         })
         .then((data)=>{
-            
             setPokemonData(data);
-            
         })
        
        
-    },[pokemonId]);
-    
+    },[]);
 
+    const mudarBackground = () =>{
+        if (pokemonData && pokemonData.types){
+            pokemonData.types.forEach((type)=>{
+            if(type.type.name === 'grass' || type.type.name === 'ground' ) return setBackground(`url(${grama})`);
+            if(type.type.name === 'fire') return setBackground(`url(${fogo})`);
+            if(type.type.name === 'water') return setBackground(`url(${agua})`);
+            if(type.type.name === 'electric') return setBackground(`url(${eletrico})`);
+            if(type.type.name === 'dark') return setBackground(`url(${dark})`);
+            if(type.type.name === 'normal') return setBackground(`url(${normal})`);
+            if(type.type.name === 'flying') return setBackground(`url(${fly})`);
+        })
+        
+        }
+    }
+   useEffect(()=>{
+    mudarBackground();
+   },[pokemonData]);
 
    
      return (
         <DivContainer>
 {pokemonData && (
-            <SectionNav>
+            <SectionNav style={{backgroundImage: background}}>
                 <ImgPokemon><img src={pokemonData.sprites.front_default} style={{width:'100%'}}/></ImgPokemon>
             </SectionNav>
 )
@@ -50,19 +75,19 @@ export default Cards
 
 const DivContainer = styled.div`
       
-      height: 300px;
-      width: 220px;
-      box-shadow: 2px 4px 0 grey;
-      border-radius: 20px;
-      margin:20px;
-      position: relative;
-      border: 1px solid black;
-      cursor: pointer;
+    height: 300px;
+    width: 220px;
+    box-shadow: 2px 4px 0 grey;
+    border-radius: 20px;
+    margin:20px;
+    position: relative;
+    border: 1px solid black;
+    cursor: pointer;
     
 `
 
 const SectionNav = styled.header`
-    background-image: url(${Img});
+    
     background-size: cover;
     height: 150px;
     border-top-left-radius: 20px;
