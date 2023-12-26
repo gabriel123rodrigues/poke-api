@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import fogo from '../../assets/fogo.jpg'
 import grama from '../../assets/grama.jpg'
@@ -10,28 +10,20 @@ import agua from '../../assets/agua.jpg'
 import normal from '../../assets/normal.jpg'
 import { useState,useEffect } from "react";
 
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
+import { PokemonService } from '../../services/PokemonService'
 
-export const Cards = ({}) => {
 
+
+export const Cards = () => {
+
+    
+    const randomId =  Math.floor(Math.random() * 1017);
+    const pokemonData = PokemonService(randomId);
+    
     const [background,setBackground] = useState ('');
-    const [pokemonData,setPokemonData] = useState(null);
-    function numero (){
-        let numeroAleatorio = Math.floor(Math.random() * 1017);
-        return numeroAleatorio; 
-    }
-
-    useEffect(()=>{
-        
-        fetch(`https://pokeapi.co/api/v2/pokemon/${numero()}`)
-        .then((response)=>{
-            return response.json();
-        })
-        .then((data)=>{
-            setPokemonData(data);
-        })
-       
-       
-    },[]);
+   
+    
 
     const mudarBackground = () =>{
         if (pokemonData && pokemonData.types){
@@ -50,11 +42,13 @@ export const Cards = ({}) => {
    useEffect(()=>{
     mudarBackground();
    },[pokemonData]);
+   
+   console.log(pokemonData, 'cardss')
 
    
      return (
         <DivContainer>
-{pokemonData && (
+{pokemonData && pokemonData.sprites && (
             <SectionNav style={{backgroundImage: background}}>
                 <ImgPokemon><img src={pokemonData.sprites.front_default} style={{width:'100%'}}/></ImgPokemon>
             </SectionNav>

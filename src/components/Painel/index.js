@@ -5,10 +5,12 @@ import img from '../../assets/Background-Pokemon.webp'
 import { useState } from "react";
 
 
-const Painel = () => {
 
+
+const Painel = () => {
+    
     const [newPokemon, setNewPokemon] = useState([0,1,2]);
-    console.log(newPokemon);
+    
    
     const generatePokemon = () =>{
         console.log('cliquei');
@@ -17,10 +19,10 @@ const Painel = () => {
         for(let i=0; i<3 ; i++){
             updatePokemon.push(addPokemon);
             addPokemon ++;
+           
         }
         setNewPokemon([...newPokemon,...updatePokemon]);
     }
-   
 
     return (
 
@@ -28,9 +30,7 @@ const Painel = () => {
         <>
             <Div>
                 <Section>
-                    {newPokemon.map((pokemon, index)=><Cards key={index} />)}
-                   
-                    
+                    {newPokemon.map((pokemon, index)=><Cards key={index}  />)}
                 </Section>
                 <Footer>
                     <Button onClick={generatePokemon}>Mais Pokemons</Button>

@@ -2,7 +2,14 @@ import React from 'react'
 import Img from '../../assets/charizard.jpg';
 import brackgroundImg from '../../assets/fogo.jpg'
 import styled from 'styled-components';
+import { PokemonDataContext } from '../../context/PokemonDataContext';
+import { useContext } from 'react';
+
+
 export const PokemonDetails = () => {
+    
+    const {pokemonData}  =  useContext(PokemonDataContext);
+    console.log(pokemonData, 'details')
   return (
     <Container>
 
@@ -12,11 +19,12 @@ export const PokemonDetails = () => {
       </DivImg>
       <h1 style={{color:'white', zIndex:'5',marginTop:'75px',fontSize:'35px'}}>Charizard</h1>
       <DivInfo>
-        <ul style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-          <DivItem ><Item><span></span>Tipo</Item></DivItem>
+      {pokemonData &&( <ul style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+          <DivItem ><Item><span></span>Tipo: {pokemonData.types.type.name}</Item></DivItem>
           <DivItem><Item><span></span>Movimentos</Item></DivItem>
           <DivItem><Item><span></span>Habilidades</Item></DivItem>
         </ul>
+      )}
       </DivInfo>
 
     </Container>
